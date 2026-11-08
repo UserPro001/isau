@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru-ru" lang="ru-ru" class="webkit safari chrome win">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Сайт Института Системного анализа и управления</title>
+  <style>
+    /* Общие стили и сброс */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background: #fff5cf; 
+      font-family: Arial, Helvetica, sans-serif; 
+      font-size: 12px; 
+      line-height: 1.8; 
+      color: #000000; 
+    }
+    img { border: 0; max-width: 100%; height: auto; }
+    ul, ol { list-style: none; padding: 0; margin: 0; }
+    a { color: #af5632; text-decoration: none; outline: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Flexbox структура страницы */
+    #vt_bg_wapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    #vt_main_top_wapper, #vt_content_wapper { display: flex; flex-direction: column; width: 100%; max-width: 980px; }
+    
+    /* Шапка */
+    #vt_bgtop_head { width: 100%; }
+    #vt_sau_header { background: url('./isau_files/head.png') center top no-repeat; height: 204px; width: 100%; background-size: cover; }
+    
+    /* Главное меню */
+    #vt_menu_wapper { background: #fdbd81; padding: 10px 20px; margin-bottom: 20px; display: flex; align-items: center; min-height: 86px; }
+    #vtem_menu { width: 100%; }
+    #vtem_menu > ul { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+    #vtem_menu > ul > li > a { color: #aa5534; font-weight: bold; text-transform: uppercase; font-size: 10px; display: block; padding: 5px; }
+    #vtem_menu > ul > li > a:hover { color: #fff; background: #f28a01; }
+    /* Скрываем выпадающие списки, так как функционал не требуется */
+    #vtem_menu ul ul { display: none; }
+
+    /* Верхний блок (Слайдер и Новости) */
+    #vt_main_header { display: flex; flex-direction: row; gap: 20px; margin-bottom: 20px; align-items: flex-start; }
+    #vt_news_show { flex: 2; background: #fdbf84; padding: 10px; overflow: hidden; }
+    #vt_drawer { flex: 1; background: #ffffff url('./isau_files/vt_bg_draw.png') left top repeat-x; padding: 10px; color: #999; min-height: 377px; }
+    
+    /* Слайдер (статичный вид) */
+    #vtemimageshow1 ul { display: flex; flex-wrap: wrap; gap: 10px; }
+    #vtemimageshow1 li { flex: 1 1 calc(33.333% - 10px); }
+    #vtemimageshow1 img { width: 100%; height: auto; border: 2px solid #ddd; }
+    /* Скрываем лишние элементы управления слайдера */
+    .prev_button, .next_button, .info_slide_dots, .container_skitter { display: none; }
+    
+    /* Новости в шапке */
+    #dm_tabs_1 ul { display: flex; margin-bottom: 10px; }
+    #dm_tabs_1 a { padding: 5px 10px; border-top: 1px solid #f28a01; color: #af5632; font-weight: bold; }
+    .latestnews { margin-bottom: 10px; display: block; }
+    .latestnews a { color: #666; line-height: 1.4; }
+
+    /* Хлебные крошки и поиск */
+    #vt_breadcrumb_top_wapper { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; background: #fff; margin-bottom: 20px; border-bottom: 1px solid #ccc;}
+    #vt_pathway { padding-left: 10px; }
+    #vt_search { padding-right: 10px; }
+    #vt_search form { display: flex; gap: 5px; }
+    #vt_search input[type="text"] { padding: 5px; border: 1px solid #ccc; }
+
+    /* Основной контент */
+    #vt_main_inside { display: flex; flex-direction: row; gap: 20px; align-items: flex-start; padding-bottom: 20px; }
+    
+    /* Левая колонка (Контент) */
+    #vt_main_com { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+    
+    /* Блог */
+    .vt_home_blog { background: #fff5cf; border-right: 3px solid #474c4d; border-bottom: 3px solid #474c4d; padding: 10px; }
+    .vt_blog_wapper { display: flex; flex-direction: column; gap: 20px; }
+    .article_column { display: flex; flex-direction: column; }
+    .contentheading a { font-size: 16px; font-weight: bold; color: #af5632; }
+    .vt_intro { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+    .vt_intro img { margin-bottom: 10px; }
+    .readon { display: inline-block; margin-top: 10px; font-weight: bold; }
+
+    /* Карточки кафедр (сетка) */
+    #vt_inset_wapper { display: flex; flex-wrap: wrap; gap: 20px; }
+    .widthinset50 { flex: 1 1 calc(50% - 10px); display: flex; flex-direction: column; gap: 20px; }
+    .moduletable_boxnews { background: #fff5cf; border-right: 3px solid #474c4d; border-bottom: 3px solid #474c4d; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+    .contentheading_boxnews a { font-size: 14px; font-weight: bold; color: #af5632; }
+    .moduletable_boxnews table { width: 100%; border-collapse: collapse; }
+    .moduletable_boxnews td { padding: 5px 0; vertical-align: top; }
+    .readmore { display: inline-block; margin-top: 10px; font-weight: bold; }
+
+    /* Правая колонка (Сайдбар) */
+    #vt_nav_right { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    #vt_nav_right .vt_moduletable { background: #fff5cf; border-right: 3px solid #474c4d; border-bottom: 3px solid #474c4d; padding: 10px; text-align: center; }
+    #vt_nav_right .vt_moduletable img { max-width: 100%; margin-bottom: 10px; }
+    
+    /* Подвал */
+    #vt_footer_menu_copyright { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 980px; margin-top: 20px; }
+    #vt_footer_box { width: 100%; background: #f7dfac; border-bottom: 1px solid #CCC; padding: 5px 10px; text-align: right; }
+    #vt_footer_box a { font-weight: bold; color: #999; }
+    #vt_copyright { padding: 20px 0; text-align: center; color: #999; width: 100%; }
+
+    /* Адаптивность для небольших экранов */
+    @media (max-width: 800px) {
+      #vt_main_header, #vt_main_inside { flex-direction: column; }
+      #vt_main_com, #vt_nav_right, #vt_news_show, #vt_drawer { width: 100%; flex: none; }
+      .widthinset50 { flex: 1 1 100%; }
+      #vtem_menu > ul { justify-content: center; }
+      #vt_breadcrumb_top_wapper { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body id="vtem">
+<div id="vt_bg_wapper">
+  <div id="vt_main_top_wapper">
+    <div id="vt_bgtop_head">
+      <div id="vt_sau_header"></div>
+    </div>
+    <div id="vt_menu_wapper">
+      <div id="vtem_menu">
+        <ul>
+          <li><a href="#"><span>Главная</span></a></li>
+          <li><a href="#"><span>Поступающим</span></a></li>
+          <li><a href="#"><span>Студентам</span></a></li>
+          <li><a href="#"><span>Аспирантам</span></a></li>
+          <li><a href="#"><span>Учебный процесс</span></a></li>
+          <li><a href="#"><span>Наука</span></a></li>
+          <li><a href="#"><span>Инновации</span></a></li>
+          <li><a href="#"><span>Портал ИСАУ</span></a></li>
+          <li><a href="#"><span>Виртуальный тур</span></a></li>
+          <li><a href="#"><span>Галерея</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="vt_main_header">
+      <div id="vt_news_show">
+        <div id="vtemimageshow1">
+          <ul>
+            <li><img src="./isau_files/1.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/2.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/3.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/4.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/5.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/6.jpg" alt="VTEM Image Show"></li>
+            <li><img src="./isau_files/7.jpg" alt="VTEM Image Show"></li>
+          </ul>
+        </div>
+      </div>
+      <div id="vt_drawer">
+        <div id="dm_tabs_1">
+          <ul>
+            <li><a href="#">Новости</a></li>
+          </ul>
+        </div>
+        <div id="dm_container_1">
+          <ul class="latestnews">
+            <li class="latestnews">
+              <a href="#" class="latestnews">Публикация заказного тематического номера Международного журнала “Artificial Intelligence Advances”</a>
+            </li>
+            <li class="latestnews">
+              <a href="#" class="latestnews">Международная IT-школа “Machine Learning, Parallel and Hybrid Computations &amp; Big Data Analytics”</a>
+            </li>
+            <li class="latestnews">
+              <a href="#" class="latestnews">Летняя компьютерная школа «Аналитика Больших Данных Дубна-2019»</a>
+            </li>
+            <li class="latestnews">
+              <a href="#" class="latestnews">I Всероссийский семинар «Искусственный интеллект, когнитивное моделирование и интеллектуальная робототехника»</a>
+            </li>
+          </ul>
+          <div style="text-align:right; margin-top: 10px;"><a href="#">Архив новостей</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="vt_content_wapper">
+    <div id="vt_breadcrumb_top_wapper">
+      <div id="vt_pathway">
+        <span class="breadcrumbs pathway">Главная</span>
+      </div>
+      <div id="vt_top">
+        <div id="vt_search">
+          <form action="#" method="post">
+            <div class="search">
+              <input name="searchword" id="mod_search_searchword" maxlength="20" class="inputbox" type="text" size="20" value="поиск...">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="vt_wapper">
+      <div id="vt_main_items">
+        <div id="vt_main_inside">
+          
+          <div id="vt_main_com">
+            <div class="vt_home_blog">
+              <div class="vt_blog_wapper">
+                <div class="article_column">
+                  <div class="contentpaneopen">
+                    <span class="contentheading">
+                      <a href="#" class="contentpagetitle">Об Институте Системного анализа и управления</a>
+                    </span>
+                  </div>
+                  <div class="contentpaneopen">
+                    <div class="vt_intro">
+                      <table border="0">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <p style="text-align: center;"><img src="./isau_files/vypusk.jpg" border="0" width="270" height="181"></p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p style="text-align: justify;"><strong>Институт системного анализа и управления (Институт САУ) является структурным подразделением Университета «Дубна».</strong></p>
+                      <div style="background-color: #ffdead; padding: 5px; margin-bottom: 10px; font-size: 12px; margin-left: 20px; text-align: center; font-weight: bold; width: 270px; display: inline-block;">
+                        <a href="#" title="Виртуальная экскурсия по институту"><strong>Виртуальная экскурсия по Институту</strong></a>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#" class="readon"><span>Подробнее...</span></a>
+                </div>
+
+                <div class="article_column">
+                  <div class="contentpaneopen">
+                    <span class="contentheading">
+                      <a href="#" class="contentpagetitle">Кафедра системного анализа и управления</a>
+                    </span>
+                  </div>
+                  <div class="contentpaneopen">
+                    <div class="vt_intro">
+                      <p><img src="./isau_files/sau-foto.jpg" border="0" alt="SAU" width="270" height="181"></p>
+                      <p><strong><span style="color: #c7851d;">Заведующий кафедрой</span> — д.т.н, профессор, академик РАЕН Черемисина Евгения Наумовна.</strong></p>
+                      <p style="text-align: justify;"><span style="color: #c7851d;"><strong>Телефоны кафедры:</strong></span> +7(49621) 6-60-10.</p>
+                      <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:ipank@uni-dubna.ru">ipank@uni-dubna.ru</a></p>
+                    </div>
+                  </div>
+                  <a href="#" class="readon"><span>Подробнее...</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div id="vt_inset_wapper">
+              <div class="widthinset50">
+                <div class="vt_moduletable moduletable_boxnews">
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td class="contentheading_boxnews" width="100%">
+                          <a href="#" class="contentpagetitle_boxnews">Кафедра распределенных информационно- вычислительных систем</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td valign="top">
+                          <p style="text-align: justify;"><img src="./isau_files/rivs-foto.jpg" border="0" width="270" height="180"></p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>Заведующий кафедрой — доктор технических наук, профессор Кореньков Владимир Васильевич.</strong></span></p>
+                          <p style="text-align: justify;"><strong><span style="color: #c7851d;">Телефон кафедры:</span> </strong>+7(49621) 6-60-25.</p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:solga@uni-dubna.ru">solga@uni-dubna.ru</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">
+                          <a class="readmore" href="#">Подробнее ...</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="vt_moduletable moduletable_boxnews">
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td class="contentheading_boxnews" width="100%">
+                          <a href="#" class="contentpagetitle_boxnews">Кафедра интеллектуального управления техническими системами</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td valign="top">
+                          <p><img src="./isau_files/iuts-foto.jpg" border="0" width="270" height="180"></p>
+                          <p style="text-align: justify;"><strong><span style="color: #c7851d;">Заведующий кафедрой </span> — кандидат технических наук, доцент, член-корреспондент РАЕН Крюков Юрий Алексеевич.</strong></p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>Телефон кафедры: </strong><span style="color: #000000;">+7 </span></span>(49621) 6-60-19.</p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:iuts@uni-dubna.ru">iuts@uni-dubna.ru</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">
+                          <a class="readmore" href="#">Подробнее ...</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="vt_moduletable moduletable_boxnews">
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td class="contentheading_boxnews" width="100%">
+                          <a href="#" class="contentpagetitle_boxnews">Кафедра цифровой экономики и управления</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td valign="top">
+                          <p style="text-align: justify;"><img src="./isau_files/tseiu-foto.jpg" border="0" width="300" height="200"></p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>Заведующий кафедрой — кандидат экономических наук, доцент Тюпикова Татьяна Викторовна.</strong></span></p>
+                          <p style="text-align: justify;"><strong><span style="color: #c7851d;">Телефон кафедры:</span> </strong>+7(49621) 6-60-64.</p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:econom@uni-dubna.ru">econom@uni-dubna.ru</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">
+                          <a class="readmore" href="#">Подробнее ...</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="widthinset50">
+                <div class="vt_moduletable moduletable_boxnews">
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td class="contentheading_boxnews" width="100%">
+                          <a href="#" class="contentpagetitle_boxnews">Кафедра информационных технологий</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td valign="top">
+                          <p><img src="./isau_files/it-foto.jpg" border="0" width="270" height="177"></p>
+                          <p><span><strong><span style="color: #c7851d;">Заведующий кафедрой </span> — кандидат физико-математических наук Токарева Надежда Александровна.</strong></span></p>
+                          <p style="text-align: justify;"><span><span style="color: #c7851d;"><strong>Телефон кафедры:</strong></span> +7(49621) 6-60-25.</span></p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:solga@uni-dubna.ru">solga@uni-dubna.ru</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">
+                          <a class="readmore" href="#">Подробнее ...</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="vt_moduletable moduletable_boxnews">
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td class="contentheading_boxnews" width="100%">
+                          <a href="#" class="contentpagetitle_boxnews">Кафедра геоинформационных систем и технологий</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="contentpaneopen_boxnews">
+                    <tbody>
+                      <tr>
+                        <td valign="top">
+                          <p><strong style="text-align: justify;"><span style="color: #c7851d;"><img src="./isau_files/gis-foto.jpg" border="0" width="270" height="180"></span></strong></p>
+                          <p style="text-align: justify;"><strong><span style="color: #c7851d;">Заведующий кафедрой</span> — кандидат технических наук, доцент Любимова Анна Владимировна.</strong></p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>Телефон кафедры: </strong><span style="color: #000000;">+7 (</span></span>49621)-6-61-09.</p>
+                          <p style="text-align: justify;"><span style="color: #c7851d;"><strong>E-mail:</strong></span> <a href="mailto:shamef-kate@yandex.ru">shamef-kate@yandex.ru</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">
+                          <a class="readmore" href="#">Подробнее ...</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="vt_nav_right">
+            <div class="vt_moduletable">
+              <p style="text-align: center;"><a href="#"><img src="./isau_files/shz.jpg" border="0" title="Шаблоны для различных заявлений по учебному процессу Института САУ" width="295" height="67"></a></p>
+            </div>
+            <div class="vt_moduletable">
+              <p style="text-align: center;"><a href="#"><img src="./isau_files/knopka_faq.jpg" border="0" title="Памятка для первокурсников" width="295" height="67"></a></p>
+            </div>
+            <div class="vt_moduletable">
+              <div id="vk_groups" style="width: 100%; max-width: 297px; height: 320px; background: none; margin: 0 auto;">
+                <iframe name="fXD623ce" frameborder="0" src="./isau_files/widget_community.html" width="297" height="320" scrolling="no" id="vkwidget1" style="overflow: hidden; height: 320px; width: 100%;"></iframe>
+              </div>
+            </div>
+            <div class="vt_moduletable">
+              <p><a href="#"><img src="./isau_files/presentation_isau.jpg" border="0" width="293" align="center"></a></p>
+            </div>
+            <div class="vt_moduletable">
+              <table style="text-align: center; width: 100%; border-collapse: collapse;">
+                <tbody>
+                  <tr>
+                    <td><a href="#"><p style="text-align: center;"><img src="./isau_files/vp_logo.gif" border="0"></p></a></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center;"><a href="#">Visual Paradigm</a> provides Dubna State University with <a href="#">UML</a> and <a href="#">BPMN</a> tools under the <a href="#">Academic Training Partner Program</a>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="vt_footer_menu_copyright">
+    <div id="vt_footer_box">
+      <p><a href="#" title="Наверх страницы"><span>Go Top</span></a></p>
+    </div>
+    <div id="vt_copyright">
+      <div> © 2009-2019 Сайт Института Системного анализа и управления. Все права защищены.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
